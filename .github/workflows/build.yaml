@@ -1,12 +1,7 @@
 name: Java CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -40,7 +35,7 @@ jobs:
           javac -version
 
       # Run build (adapt this to your project)
-      - name: Build with Maven
+      - name: Build with gradle
         run: |
           chmod 777 ./gradlew 
           ./gradlew clean bootBuildImage
