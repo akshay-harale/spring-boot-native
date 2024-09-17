@@ -1,0 +1,46 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Download and install GraalVM
+      - name: Set up GraalVM JDK 21.0.2
+        run: |
+          # Download the GraalVM tarball
+          wget https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.2/graalvm-community-jdk-21.0.2_linux-x64_bin.tar.gz
+          
+          # Extract the tarball
+          tar -xzf graalvm-community-jdk-21.0.2_linux-x64_bin.tar.gz
+          
+          # Move GraalVM to /usr/local
+          sudo mv graalvm-jdk-21.0.2 /usr/local/graalvm
+          
+          # Set JAVA_HOME and update PATH
+          echo "JAVA_HOME=/usr/local/graalvm" >> $GITHUB_ENV
+          echo "/usr/local/graalvm/bin" >> $GITHUB_PATH
+
+      # Verify the installation
+      - name: Verify Java installation
+        run: |
+          java -version
+          javac -version
+
+      # Run build (adapt this to your project)
+      - name: Build with Maven
+        run: |
+          chmod 777 gradlew 
+          .\gradlew clean bootBuildImage
