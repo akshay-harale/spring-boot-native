@@ -25,9 +25,9 @@ jobs:
           
           # Extract the tarball
           tar -xzf graalvm-community-jdk-21.0.2_linux-x64_bin.tar.gz
-          
+          ls 
           # Move GraalVM to /usr/local
-          sudo mv graalvm-jdk-21.0.2 /usr/local/graalvm
+          sudo mv graalvm-community-openjdk-21.0.2+13.1 /usr/local/graalvm
           
           # Set JAVA_HOME and update PATH
           echo "JAVA_HOME=/usr/local/graalvm" >> $GITHUB_ENV
